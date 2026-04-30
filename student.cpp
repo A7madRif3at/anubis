@@ -20,12 +20,16 @@ public:
     string getGender() { return gender; }
     float getScore() { return score; }
     int getReadingLevel() { return readingLevel; }
+    void setScore(float s) { score = s; }
+    void setReadingLevel(int r) { readingLevel = r; }
 };
 
 int main() {
     Student s1("Ahmed", "Male", 85.5, 7);
+    cout << s1.getScore() << endl;  // before
+    s1.setScore(95.0);
     cout << s1.getName() << endl;
-    cout << s1.getScore() << endl;
+    cout << s1.getScore() << endl;  // after
     system("pause");
     return 0;
 }
