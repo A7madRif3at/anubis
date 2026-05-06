@@ -29,6 +29,20 @@ int main() {
     while(fgets(buffer, 256, pipe)) {
         log << buffer;
     }
+    int ports[] = {21, 22, 23, 25, 53, 80, 443, 445, 3389};
+
+    for(int i = 0; i < 9; i++){
+        int port = ports[i];
+        string testCommand = "curl -s --connect-timeout 1 " + ip + ":" + to_string(port);
+        int result = system(testCommand.c_str());
+        if(result == 0) {
+            cout << "Port" << port << "is open" << endl;
+            log << "Port" << port << "is open" << endl;
+        }
+        }
+    
+
+
     pclose(pipe);
     log << "Status: Pending" << endl;
     log.close();
