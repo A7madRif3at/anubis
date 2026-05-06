@@ -1,7 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+string detectService(string ip, int port){
+    string cmd = "curl -I --connect-timeout 1 " + ip + ":" + to_string(port) + " 2>&1 | findstr Server";
 
+    FILE* pipe = popen(cmd.c_str(), "r");
+    char buffer[256];
+    string result = "Uknown";
+
+    if(fgets(buffer, 256, pipe)) {
+        result = string(buffer);
+    }
+    pclose(pipe);
+    return result;
+    
+}
 
 int main() {
     string ip;
@@ -36,8 +49,10 @@ int main() {
         string testCommand = "curl -s --connect-timeout 1 " + ip + ":" + to_string(port);
         int result = system(testCommand.c_str());
         if(result == 0) {
-            cout << "Port" << port << "is open" << endl;
-            log << "Port" << port << "is open" << endl;
+            string service = detectService(ip, port);
+
+            cout << "Port " << port << " open - " << endl;
+            log << "Port " << port << " open - " << endl;
         }
         }
     
