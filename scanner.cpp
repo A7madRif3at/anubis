@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+
 string detectService(string ip, int port){
     string cmd = "curl -I --connect-timeout 1 " + ip + ":" + to_string(port) + " 2>&1 | findstr Server";
 
@@ -25,6 +27,8 @@ int main() {
 
     time_t now = time(0);
     string timestamp = ctime(&now);
+    timestamp.pop_back();  // remove the trailing newline
+
     // GeoIP lookup
     string command = "curl -s http://ip-api.com/line/" + ip + "?fields=country,city,isp";
     system(command.c_str());
@@ -54,8 +58,12 @@ int main() {
             cout << "Port " << port << " open - " << endl;
             log << "Port " << port << " open - " << endl;
         }
+
         }
+    ofstream csv("scan_result.csv", ios::app);
     
+    csv << timestamp << "," << ip << ",Poland,Warsaw,EDGECAST,Scanned" << endl;
+    csv.close();
 
 
     pclose(pipe);
