@@ -64,8 +64,16 @@ int main() {
     
     csv << timestamp << "," << ip << ",Poland,Warsaw,EDGECAST,Scanned" << endl;
     csv.close();
-
-
+    ofstream jsonFile("scan_results.json", ios::app);
+    jsonFile << "{" << endl;
+    jsonFile << "  \"timestamp\": \"" << timestamp << "\"," <<  endl;
+    jsonFile << "  \"target\": \"" << ip << "\"," << endl;
+    jsonFile << "  \"country\": \"Poland\"," << endl;
+    jsonFile << "  \"city\": \"Warsaw\"," << endl;
+    jsonFile << "  \"isp\": \"EDGECAST\"," << endl;
+    jsonFile << "  \"status\": \"Scanned\"" << endl;
+    jsonFile << "}," << endl;   
+    jsonFile.close();
     pclose(pipe);
     log << "Status: Pending" << endl;
     log.close();
